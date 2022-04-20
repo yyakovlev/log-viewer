@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -141,8 +142,10 @@ public class LogbackLogFormatTest extends AbstractLogTest {
                 "2001-02-21 11:22:03.000000", "INFO", "com.logviewer.formats.LogbackLogFormatTest", "localhost-startStop-1-EventThread",
                 "Authentication failed 100");
 
+        String currentZoneOffset = String.format("%tz", ZonedDateTime.now());
+
         checkPattern("%date{yyyy-MM-dd HH:mm:ss ZZZZ} [%level] from %logger in %thread - %message%n%xException", event,
-                "2001-02-21 11:22:03 +0300", "INFO", "com.logviewer.formats.LogbackLogFormatTest", "localhost-startStop-1-EventThread",
+                "2001-02-21 11:22:03 " + currentZoneOffset /* e.g. +0300 */, "INFO", "com.logviewer.formats.LogbackLogFormatTest", "localhost-startStop-1-EventThread",
                 "Authentication failed 100");
 
         checkPattern("%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n", event,
@@ -150,7 +153,7 @@ public class LogbackLogFormatTest extends AbstractLogTest {
                 "Authentication failed 100");
 
         checkPattern("%date{yyyy-MM-dd HH:mm:ss ZZZZ} [%level] from %logger in %thread - .%M\\(%line\\) - %message%n%xException", event,
-                "2001-02-21 11:22:03 +0300", "INFO", "com.logviewer.formats.LogbackLogFormatTest",
+                "2001-02-21 11:22:03 " + currentZoneOffset /* e.g. +0300 */, "INFO", "com.logviewer.formats.LogbackLogFormatTest",
                 "localhost-startStop-1-EventThread", "invoke0", "-2",
                 "Authentication failed 100");
 
