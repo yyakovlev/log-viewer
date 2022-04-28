@@ -26,7 +26,7 @@
             </activation>
             <build>
                 <plugins>
-                    <!--plugin>
+                    <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <version>1.6</version>
@@ -45,17 +45,27 @@
                                 </goals>
                             </execution>
                             <execution>
+                                <id>npm-install</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>install --loglevel silly</arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>build</id>
                                 <phase>prepare-package</phase>
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>run-script build</arguments>
+                                    <arguments>run-script build --loglevel silly</arguments>
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin-->
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
